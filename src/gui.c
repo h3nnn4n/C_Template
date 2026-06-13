@@ -35,7 +35,8 @@ void gui_render(Sample *s) {
         if (igBegin("Demo", NULL, 0)) {
             igText("Counter: %d", s->counter);
 
-            if (igButton("Reset", (ImVec2){80, 20})) {
+            if (igButton("Reset", (ImVec2){80, 20}))
+            {
                 sample_reset(s);
             }
 
