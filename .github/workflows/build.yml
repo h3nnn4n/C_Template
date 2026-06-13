@@ -25,7 +25,11 @@ jobs:
 
       - name: Install system deps (macOS)
         if: runner.os == 'macOS'
-        run: brew install cmake
+        run: |
+          CMAKE_VERSION=3.28.6
+          CMAKE_DIR="cmake-${CMAKE_VERSION}-macos-universal"
+          curl -sL "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/${CMAKE_DIR}.tar.gz" | tar xz
+          echo "${PWD}/${CMAKE_DIR}/CMake.app/Contents/bin" >> $GITHUB_PATH
 
       - name: Build
         run: make build

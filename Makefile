@@ -95,6 +95,7 @@ run: $(TARGET)
 glfw: $(BUILDDIR)/.glfw_built
 
 $(BUILDDIR)/.glfw_built:
+	@cmake --version | grep -q 'cmake version 3\.' || { echo "GLFW requires cmake 3.x (3.16-3.28). Found: $$(cmake --version | head -1)"; exit 1; }
 	cmake -B deps/glfw/build -S deps/glfw -G "Unix Makefiles" -DBUILD_SHARED_LIBS=ON -DGLFW_BUILD_WAYLAND=OFF
 	cmake --build deps/glfw/build -- -j$$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || echo 4)
 	mkdir -p $(BUILDDIR)
