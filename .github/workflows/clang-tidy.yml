@@ -16,10 +16,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake libgl-dev libxrandr-dev libxinerama-dev \
-            libxcursor-dev libxi-dev libxext-dev clang clang-tidy
+            libxcursor-dev libxi-dev libxext-dev clang clang-tidy bear
+
+      - name: Generate compile_commands.json
+        run: bear -- make build
 
       - name: Run clang-tidy
         run: |
-          clang-tidy src/*.c --warnings-as-errors \
-            --checks=bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-* \
-            -- -std=gnu11 -Isrc -Ideps/glad/include -Ideps/stb -Ideps/pcg-c/include -Ideps/Unity/src
+          clang-tidy -p . src/*.c --warnings-as-errors \
+            --checks=bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-*
