@@ -91,7 +91,7 @@ rebuild:
 run: $(TARGET)
 	$(TARGET)
 
-valgrind: $(TARGET)
+valgrind: build
 	valgrind --leak-check=full --error-exitcode=1 $(TARGET)
 
 # GLFW cmake build (stamp file)
