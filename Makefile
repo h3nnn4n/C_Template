@@ -84,7 +84,9 @@ build: glfw pcg pcg_full $(TARGET)
 debug: OPTIMIZATION := -g -pg -O0
 debug: build
 
-rebuild: clean build
+rebuild:
+	@$(MAKE) --no-print-directory clean
+	@$(MAKE) --no-print-directory build
 
 run: $(TARGET)
 	$(TARGET)
@@ -157,6 +159,10 @@ test: pcg $(TEST_TARGETS)
 		$$t || exit $$?; \
 	done
 	@echo "All tests passed."
+
+test_%: pcg $(BUILDDIR)/test/test_%
+	@echo $(ECHOFLAGS) "[RUN]\t$(filter-out pcg,$^)"
+	@$(filter-out pcg,$^)
 
 clean:
 	@printf "[RM]\tsrc/\n"
