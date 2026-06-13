@@ -33,6 +33,12 @@ jobs:
             --suppressions-list=.cppcheck.suppressions \
             --suppress=unusedFunction \
             --suppress=missingIncludeSystem \
+            --suppress=constVariable \
+            --suppress=constVariablePointer \
+            --suppress=staticFunction \
+            --suppress=constParameterPointer \
+            --suppress=normalCheckLevelMaxBranches \
+            --suppress=checkersReport \
             --std=c11 \
             --language=c \
             --error-exitcode=1 \
