@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 .PHONY: all build rebuild clean distclean test debug run glfw pcg pcg_full superclean \
-        cpplint cppcheck clang-format format valgrind
+        cpplint cppcheck clang-format format valgrind valgrind-test
 
 PROJECT_NAME := C_Template
 TARGET      := bin/$(PROJECT_NAME)
@@ -166,6 +166,13 @@ test: pcg $(TEST_TARGETS)
 		$$t || exit $$?; \
 	done
 	@echo "All tests passed."
+
+valgrind-test: pcg $(TEST_TARGETS)
+	@for t in $(TEST_TARGETS); do \
+		echo $(ECHOFLAGS) "[VALGRIND]\t$$t"; \
+		valgrind --leak-check=full --error-exitcode=1 $$t || exit $$?; \
+	done
+	@echo "All valgrind checks passed."
 
 test_%: pcg $(BUILDDIR)/test/test_%
 	@echo $(ECHOFLAGS) "[RUN]\t$(filter-out pcg,$^)"
