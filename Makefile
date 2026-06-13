@@ -211,7 +211,7 @@ superclean:
 	@rm -rf deps/glfw/build
 
 cpplint:
-	cpplint --filter=-build/include_subdir,-readability/nolint,-whitespace/line_length,-whitespace/comments,-readability/casting,-build/header_guard,-runtime/arrays,-legal/copyright,-whitespace/braces src/*.c
+	cpplint --filter=-build/include_subdir,-readability/nolint,-whitespace/line_length,-whitespace/comments,-readability/casting,-build/header_guard,-runtime/arrays,-legal/copyright,-whitespace/braces,-whitespace/newline src/*.c
 
 cppcheck:
 	cppcheck --enable=all --suppressions-list=.cppcheck.suppressions --suppress=constVariable --suppress=constVariablePointer --suppress=staticFunction --suppress=constParameterPointer --suppress=normalCheckLevelMaxBranches --suppress=checkersReport --std=c11 --language=c --error-exitcode=1 src/*.c

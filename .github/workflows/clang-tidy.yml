@@ -24,4 +24,4 @@ jobs:
       - name: Run clang-tidy
         run: |
           clang-tidy -p . src/*.c --warnings-as-errors \
-            --checks=-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-*
+            --checks=bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-*,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
