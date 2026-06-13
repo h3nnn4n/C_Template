@@ -1,0 +1,19 @@
+name: cpplint
+
+on: push
+
+jobs:
+  cpplint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Install cpplint
+        run: pip install cpplint
+
+      - name: Run cpplint
+        run: make cpplint

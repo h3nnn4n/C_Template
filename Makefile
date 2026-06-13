@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 .PHONY: all build rebuild clean distclean test debug run glfw pcg pcg_full superclean \
-        cpplint cppcheck clang-format format valgrind valgrind-test
+        cpplint cppcheck clang-format format valgrind valgrind-test heap-check
 
 PROJECT_NAME := C_Template
 TARGET      := bin/$(PROJECT_NAME)
@@ -173,6 +173,13 @@ valgrind-test: pcg $(TEST_TARGETS)
 		valgrind --leak-check=full --error-exitcode=1 $$t || exit $$?; \
 	done
 	@echo "All valgrind checks passed."
+
+heap-check: pcg $(TEST_TARGETS)
+	@for t in $(TEST_TARGETS); do \
+		echo $(ECHOFLAGS) "[HEAPCHECK]\t$$t"; \
+		LD_PRELOAD=libtcmalloc.so HEAPCHECK=normal $$t || exit $$?; \
+	done
+	@echo "All heap checks passed."
 
 test_%: pcg $(BUILDDIR)/test/test_%
 	@echo $(ECHOFLAGS) "[RUN]\t$(filter-out pcg,$^)"

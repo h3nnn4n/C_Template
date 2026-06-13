@@ -1,0 +1,25 @@
+name: clang-tidy
+
+on: push
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libgl-dev libxrandr-dev libxinerama-dev \
+            libxcursor-dev libxi-dev libxext-dev clang clang-tidy
+
+      - name: Run clang-tidy
+        run: |
+          clang-tidy src/*.c --warnings-as-errors \
+            --checks=bugprone-*,performance-*,readability-*,portability-*,modernize-*,clang-analyzer-*,cppcoreguidelines-* \
+            -- -std=gnu11 -Isrc -Ideps/glad/include -Ideps/stb -Ideps/pcg-c/include -Ideps/Unity/src
