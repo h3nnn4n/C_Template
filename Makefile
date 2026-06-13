@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 .PHONY: all build rebuild clean distclean test debug run glfw pcg pcg_full superclean \
-        cpplint cppcheck clang-format format
+        cpplint cppcheck clang-format format valgrind
 
 PROJECT_NAME := C_Template
 TARGET      := bin/$(PROJECT_NAME)
@@ -90,6 +90,9 @@ rebuild:
 
 run: $(TARGET)
 	$(TARGET)
+
+valgrind: $(TARGET)
+	valgrind --leak-check=full --error-exitcode=1 $(TARGET)
 
 # GLFW cmake build (stamp file)
 glfw: $(BUILDDIR)/.glfw_built
